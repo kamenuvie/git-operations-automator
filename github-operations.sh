@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Welcome to git operations automation toolkit. Let's git init, status, add, commit, and push together!"
-Sleep for 5 seconds
+Sleep  3
 
 					echo "++++++++    +++    +++++++++++++"
 					echo "++++++++    +++    +++++++++++++"
@@ -21,7 +21,7 @@ echo "Follow the instructions to complete your task ::"
 echo -e "Enter the current directory name to continue : \c"
 read Directory_Name
 
-if [ "$Directory_Name" ]; then
+if [ -f "$Directory_Name" ]; then
 
 cd $Directory_Name
 else
