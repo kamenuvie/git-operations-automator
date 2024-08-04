@@ -44,7 +44,8 @@ fi
 
 
 echo "Adding all files to staging area..."
-git add.
+git add .
+
 
 echo "Please enter your commit message"
 echo "Commit_Message:"
@@ -54,6 +55,7 @@ if [ "Commit_Message" = "$NULL" ]; then
     echo "Please provide a valid commit message."
 elif [ "Commit_Message" = "$commit_message" ]; then
 git commit -m "$Commit_Message"
+echo "$commit_Message"
 fi	
 
 
