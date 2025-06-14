@@ -8,7 +8,7 @@ COLOR_ORANGE='\033[38;5;214m' # Orange (using 256-color mode)
 COLOR_RESET='\033[0m'      # Reset color
 
 echo -e "${COLOR_GREEN}Welcome to git operations automation toolkit. Let's git init, status, add, commit, and push together!${COLOR_RESET}"
-sleep 2
+sleep 5
 
 echo -e "${COLOR_YELLOW}++++++++    +++    +++++++++++++${COLOR_RESET}"
 echo -e "${COLOR_YELLOW}++++++++    +++    +++++++++++++${COLOR_RESET}"
@@ -64,7 +64,18 @@ while true; do
         continue
     else
         git commit -m "$Commit_Message"
+        
         echo -e "${COLOR_GREEN}Pushing the changes to remote repository...${COLOR_RESET}"
-        git push origin master
+        if git push origin master; then
+            echo -e "${COLOR_GREEN}Push successful!${COLOR_RESET}"
+        else
+            echo -e "${COLOR_PINK}Push failed. Attempting to pull changes...${COLOR_RESET}"
+            if git pull origin master; then
+                echo -e "${COLOR_GREEN}Pull successful! Now pushing again...${COLOR_RESET}"
+                git push origin master
+            else
+                echo -e "${COLOR_PINK}Pull failed. Please resolve conflicts manually.${COLOR_RESET}"
+            fi
+        fi
     fi
 done
