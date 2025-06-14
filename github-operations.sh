@@ -1,63 +1,65 @@
 #!/bin/bash
 
-echo "Welcome to git operations automation toolkit. Let's git init, status, add, commit, and push together!"
-Sleep  3
+# Define color codes
+COLOR_PINK='\033[1;35m'    # Pink
+COLOR_YELLOW='\033[1;33m'  # Yellow
+COLOR_GREEN='\033[1;32m'   # Green
+COLOR_ORANGE='\033[38;5;214m' # Orange (using 256-color mode)
+COLOR_RESET='\033[0m'      # Reset color
 
-					echo "++++++++    +++    +++++++++++++"
-					echo "++++++++    +++    +++++++++++++"
-					echo "++           +           ++"
-					echo "++           +           ++"
-					echo "++           +           ++"
-					echo "++           +           ++"
-					echo "++  +++      +           ++"
-					echo "++   ++      +           ++"
-					echo "++   ++      +           ++"
-					echo "+ + +++     +++          ++"
-					echo "+ + +++     +++          ++"
+echo -e "${COLOR_GREEN}Welcome to git operations automation toolkit. Let's git init, status, add, commit, and push together!${COLOR_RESET}"
+sleep 5
 
+echo -e "${COLOR_YELLOW}++++++++    +++    +++++++++++++${COLOR_RESET}"
+echo -e "${COLOR_YELLOW}++++++++    +++    +++++++++++++${COLOR_RESET}"
+echo -e "${COLOR_PINK}++           +           ++${COLOR_RESET}"
+echo -e "${COLOR_PINK}++           +           ++${COLOR_RESET}"
+echo -e "${COLOR_PINK}++           +           ++${COLOR_RESET}"
+echo -e "${COLOR_PINK}++           +           ++${COLOR_RESET}"
+echo -e "${COLOR_PINK}++  +++      +           ++${COLOR_RESET}"
+echo -e "${COLOR_PINK}++   ++      +           ++${COLOR_RESET}"
+echo -e "${COLOR_PINK}++   ++      +           ++${COLOR_RESET}"
+echo -e "${COLOR_ORANGE}+ + +++     +++          ++${COLOR_RESET}"
+echo -e "${COLOR_ORANGE}+ + +++     +++          ++${COLOR_RESET}"
 
-echo "Follow the instructions to complete your task ::"
+echo -e "${COLOR_GREEN}Follow the instructions to complete your task ::${COLOR_RESET}"
 
-echo -e "Enter the current directory name to continue : \c"
+echo -e "${COLOR_YELLOW}Enter the current directory name to continue:${COLOR_RESET} \c"
 read Directory_Name
 
-if [ -f "$Directory_Name" ]; then
-
-cd $Directory_Name
+if [ "$Directory_Name" ]; then
+    cd "$Directory_Name" || { echo -e "${COLOR_PINK}Directory not found! Exiting.${COLOR_RESET}"; exit 1; }
 else
-cd $PWD
+    cd "$PWD"
 fi
 
-echo "Initializing git repository..."
+echo -e "${COLOR_GREEN}Initializing git repository...${COLOR_RESET}"
 git init
 
-
-echo "Enter the Url of your remote repository where the codes will be pushed :.."
-echo "Remote_URL :"
+echo -e "${COLOR_YELLOW}Enter the URL of your remote repository where the code will be pushed:${COLOR_RESET}"
+echo -e "${COLOR_YELLOW}Remote_URL:${COLOR_RESET}"
 read Remote_URL
 
-if [ "Remote_URL" = "$NULL" ]; then
-    echo "Please provide a valid remote URL."
-elif [ -u "$Remote_URL" ]; then
-git remote add origin $Remote_URL
+if [ -z "$Remote_URL" ]; then
+    echo -e "${COLOR_PINK}Please provide a valid remote URL.${COLOR_RESET}"
+    exit 1
+else
+    git remote add origin "$Remote_URL"
 fi
 
-
-echo "Adding all files to staging area..."
+echo -e "${COLOR_GREEN}Adding all files to staging area...${COLOR_RESET}"
 git add .
 
-
-echo "Please enter your commit message"
-echo "Commit_Message:"
+echo -e "${COLOR_YELLOW}Please enter your commit message:${COLOR_RESET}"
+echo -e "${COLOR_YELLOW}Commit_Message:${COLOR_RESET}"
 read Commit_Message
 
-if [ "Commit_Message" = "$NULL" ]; then
-    echo "Please provide a valid commit message."
-elif [ "Commit_Message" = "$commit_message" ]; then
-git commit -m "$Commit_Message"
-echo "$commit_Message"
-fi	
+if [ -z "$Commit_Message" ]; then
+    echo -e "${COLOR_PINK}Please provide a valid commit message.${COLOR_RESET}"
+    exit 1
+else
+    git commit -m "$Commit_Message"
+fi
 
-
-echo "Pushing the changes to remote repository..."
-git push -u origin 
+echo -e "${COLOR_GREEN}Pushing the changes to remote repository...${COLOR_RESET}"
+git push -u origin master
