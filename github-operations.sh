@@ -8,7 +8,7 @@ COLOR_ORANGE='\033[38;5;214m' # Orange (using 256-color mode)
 COLOR_RESET='\033[0m'      # Reset color
 
 echo -e "${COLOR_GREEN}Welcome to git operations automation toolkit. Let's git init, status, add, commit, and push together!${COLOR_RESET}"
-sleep 5
+sleep 2
 
 echo -e "${COLOR_YELLOW}++++++++    +++    +++++++++++++${COLOR_RESET}"
 echo -e "${COLOR_YELLOW}++++++++    +++    +++++++++++++${COLOR_RESET}"
@@ -47,19 +47,24 @@ else
     git remote add origin "$Remote_URL"
 fi
 
-echo -e "${COLOR_GREEN}Adding all files to staging area...${COLOR_RESET}"
-git add .
+# Initial add, commit, and push
+while true; do
+    echo -e "${COLOR_GREEN}Adding all files to staging area...${COLOR_RESET}"
+    git add .
 
-echo -e "${COLOR_YELLOW}Please enter your commit message:${COLOR_RESET}"
-echo -e "${COLOR_YELLOW}Commit_Message:${COLOR_RESET}"
-read Commit_Message
+    echo -e "${COLOR_YELLOW}Please enter your commit message (or type 'exit' to finish):${COLOR_RESET}"
+    echo -e "${COLOR_YELLOW}Commit_Message:${COLOR_RESET}"
+    read Commit_Message
 
-if [ -z "$Commit_Message" ]; then
-    echo -e "${COLOR_PINK}Please provide a valid commit message.${COLOR_RESET}"
-    exit 1
-else
-    git commit -m "$Commit_Message"
-fi
-
-echo -e "${COLOR_GREEN}Pushing the changes to remote repository...${COLOR_RESET}"
-git push -u origin master
+    if [ "$Commit_Message" = "exit" ]; then
+        echo -e "${COLOR_GREEN}Exiting the script.${COLOR_RESET}"
+        break
+    elif [ -z "$Commit_Message" ]; then
+        echo -e "${COLOR_PINK}Please provide a valid commit message.${COLOR_RESET}"
+        continue
+    else
+        git commit -m "$Commit_Message"
+        echo -e "${COLOR_GREEN}Pushing the changes to remote repository...${COLOR_RESET}"
+        git push origin master
+    fi
+done
