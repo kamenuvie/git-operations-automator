@@ -3,7 +3,6 @@ This simple script is a replica of the github operations such as , the git init 
 <<<<<<< HEAD
 # it works, just give it a try 
 
-=======
-
-# It works , just give it a try
->>>>>>> cc0966d8bea81f953b81d0a11d0f1fd392f01e5f
+# How to run it 
+1 Make sure the you clone via  into your main project folder
+2 
